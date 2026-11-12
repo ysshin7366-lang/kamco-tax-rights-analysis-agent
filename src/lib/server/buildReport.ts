@@ -198,7 +198,9 @@ function detail(c: ReportCase): Uint8Array {
   head[5] = fillRow(form, R[5], { 4: ["0원", "RIGHT"] });
   head[6] = fillRow(form, R[6], { 4: [money, "RIGHT"] });
 
-  const taxes = lines.filter((l) => l.right.type === "압류(조세)");
+  // 체납세액 현황에는 위임기관(그 사건에서 가장 먼저 압류한 조세 압류권자)의 내역만 적는다
+  const refId = c.ranking.reference?.id;
+  const taxes = lines.filter((l) => l.right.type === "압류(조세)" && l.right.id === refId);
   let taxSum = 0;
   let taxUnknown = false;
   // 세목(국세·지방세)별로 한 줄: 첫일 = 가장 이른 법정기일, 끝일 = 가장 늦은 법정기일 (1건이면 둘이 같다)
@@ -233,13 +235,15 @@ function detail(c: ReportCase): Uint8Array {
   pairs.push(...pair({ 0: "1", 1: "강제징수비", 3: "-", 5: "-", 7: "-", 9: "-", 11: [won(ENFORCEMENT_COST), "RIGHT"], 13: [won(ENFORCEMENT_COST), "RIGHT"], 15: [computed ? won(costPaid ?? 0) : "-", "RIGHT"] }, { 3: "", 5: "" }));
   for (const l of lines) {
     const claim = l.claim !== null ? won(l.claim) : "-";
+    // 압류권자(조세·공과금·기타 압류)는 설정금액·설정일자가 없으므로 비워 둔다
+    const seizure = l.right.type.startsWith("압류");
     pairs.push(
       ...pair(
         {
-          0: String(l.rank), 1: l.label, 3: l.name, 5: [claim, "RIGHT"], 7: [claim, "RIGHT"], 9: "-", 11: "-", 13: [claim, "RIGHT"],
+          0: String(l.rank), 1: l.label, 3: l.name, 5: [seizure ? "-" : claim, "RIGHT"], 7: [claim, "RIGHT"], 9: "-", 11: "-", 13: [claim, "RIGHT"],
           15: [l.paid !== null ? won(l.paid) : "-", "RIGHT"],
         },
-        { 3: l.remark, 5: [l.date ? `(${dot(l.date)})` : "", "RIGHT"] },
+        { 3: l.remark, 5: [seizure || !l.date ? "" : `(${dot(l.date)})`, "RIGHT"] },
       ),
     );
   }
