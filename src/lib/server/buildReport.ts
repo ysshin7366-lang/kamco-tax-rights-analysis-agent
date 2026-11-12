@@ -235,15 +235,15 @@ function detail(c: ReportCase): Uint8Array {
   pairs.push(...pair({ 0: "1", 1: "강제징수비", 3: "-", 5: "-", 7: "-", 9: "-", 11: [won(ENFORCEMENT_COST), "RIGHT"], 13: [won(ENFORCEMENT_COST), "RIGHT"], 15: [computed ? won(costPaid ?? 0) : "-", "RIGHT"] }, { 3: "", 5: "" }));
   for (const l of lines) {
     const claim = l.claim !== null ? won(l.claim) : "-";
-    // 압류권자(조세·공과금·기타 압류)는 설정금액·설정일자가 없으므로 비워 둔다
+    // 압류권자(조세·공과금·기타 압류)는 설정금액을 적지 않고(빈칸), 설정일자 칸에는 접수일자를 적는다
     const seizure = l.right.type.startsWith("압류");
     pairs.push(
       ...pair(
         {
-          0: String(l.rank), 1: l.label, 3: l.name, 5: [seizure ? "-" : claim, "RIGHT"], 7: [claim, "RIGHT"], 9: "-", 11: "-", 13: [claim, "RIGHT"],
+          0: String(l.rank), 1: l.label, 3: l.name, 5: [seizure ? "" : claim, "RIGHT"], 7: [claim, "RIGHT"], 9: "-", 11: "-", 13: [claim, "RIGHT"],
           15: [l.paid !== null ? won(l.paid) : "-", "RIGHT"],
         },
-        { 3: l.remark, 5: [seizure || !l.date ? "" : `(${dot(l.date)})`, "RIGHT"] },
+        { 3: l.remark, 5: [l.date ? `(${dot(l.date)})` : "", "RIGHT"] },
       ),
     );
   }
