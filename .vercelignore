@@ -1,0 +1,14 @@
+# Vercel에 올리지 않을 파일 (배포에 필요 없는 작업용 파일)
+# .env, node_modules, .next 등은 .gitignore 기준으로 이미 올라가지 않는다.
+권리분석기준.md
+samples
+scripts
+배분계산서_산출물
+hwpx_변환결과
+trash-can
+.bkit
+.claude
+.tmp
+*.md
+!README.md
+보고서_산출물

@@ -1,0 +1,8 @@
+﻿이 폴더의 파일은 한글(.hwpx) 문서의 기본 틀(빈 문서)입니다.
+
+출처: python-hwpx 패키지(https://github.com/airmang/python-hwpx)의 data/Skeleton.hwpx
+      Copyright 2025-2026 airmang (Dr. Wily), Apache License 2.0
+
+권리분석 에이전트의 scripts/배분계산서.mjs가 이 틀에 글꼴·테두리 정의를 덧붙이고
+본문(section0.xml)을 새로 만들어 배분계산서·배분계산내역표를 생성합니다.
+(python-hwpx 패키지의 코드는 사용하지 않고, 빈 문서 틀 파일만 참고했습니다.)

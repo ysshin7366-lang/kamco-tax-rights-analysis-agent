@@ -1,0 +1,57 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# 삭제 대기 폴더 (사용자가 직접 확인 후 삭제)
+/trash-can
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# 권리분석 기준 근거 문서 (교육자료를 정리한 내부 문서라 저장소·배포에 올리지 않는다)
+/권리분석기준.md
+
+.vercel
+.env*
+
+# 작업 도구 상태·로컬 설정, 생성 산출물 (저장소에 올리지 않는다)
+/.bkit
+/.claude
+/보고서_산출물
+/hwpx_변환결과
+/.tmp
